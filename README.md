@@ -79,3 +79,24 @@ Project::factory()->create(); // Will build up a project and save it to the data
 Project::factory()->make(); // Will build up a project without saving it to the database
 Project::factory()->raw(); // will build uo a project, store it as an array without saving it to the database
 ```
+
+### Disable Laravel graceful exception handling
+This method is used to temporarily disable exception handling in the test. 
+```php
+$this->withoutExceptionHandling();
+```
+
+### Route model binding
+Route model binding allows us to bind a route to a model. For example, from the routes file:
+```php
+Route::get('/projects/{project}', [ProjectsController::class, 'show']);
+```
+We can inject the project associated to the wildcard for ```/projects/*```, in this case ```/projects/{project}```
+
+In the controller: 
+```php
+public function show(Project $project)
+{
+  return view('projects.show', compact('project'));
+}
+```
